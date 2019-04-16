@@ -11,4 +11,29 @@
 .todo-list > li {
 	padding: 10px 5px 10px 5px;
 	border-top: 2px dashed gray;
+	display: grid;
+	grid-template-columns: 50px 1fr 50px;
+	align-items: center;
+}
+
+.task-checkbox {
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
+
+.delete-button {
+	width: 32px;
+	height: 36px;
+	color: #f44336;
+	margin: 10px;
+	border-radius: 50%;
+	text-align: center;
+	text-decoration: none;
+	font-size: 30px;
+	cursor: pointer;
+}
+
+.delete-button:hover {
+	text-shadow: 0 2px 2px rgba(255, 0, 0, 0.2);
 }

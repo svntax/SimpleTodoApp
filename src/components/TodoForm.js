@@ -19,8 +19,8 @@ class TodoForm extends React.Component {
 	}
 	
 	handleSubmit = (event) => {
-		if(this.state.currentValue){
-			this.addTask(this.state.currentValue);
+		if(this.state.currentValue.trim()){
+			this.addTask(this.state.currentValue.trim());
 			this.setState({currentValue: ""});
 		}
 		
@@ -28,12 +28,15 @@ class TodoForm extends React.Component {
 	}
 	
 	addTask = (value) => {
-		this.state.tasks.push(value);
+		this.state.tasks.push(value.trim());
 		this.setState({tasks: this.state.tasks});
 	}
 	
-	removeTask = (value) => {
-		
+	removeTask = (id) => {
+		const filteredList = this.state.tasks.filter((task, index) => {
+			return id !== index;
+		});
+		this.setState({tasks: filteredList});
 	}
 	
 	render(){
@@ -41,7 +44,7 @@ class TodoForm extends React.Component {
 			<div className="todo-form">
 				<form onSubmit={this.handleSubmit}>
 					<input className="todo-input-text" type="text" placeholder="New task..." value={this.state.currentValue} onChange={this.handleChange}></input>
-					<TodoList list={this.state.tasks} />
+					<TodoList list={this.state.tasks} handleDelete={this.removeTask} />
 				</form>
 			</div>
 		);

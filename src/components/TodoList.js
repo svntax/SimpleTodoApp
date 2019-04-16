@@ -1,6 +1,8 @@
 import React from "react";
 import "./TodoList.css";
 
+import Task from "./Task";
+
 class TodoList extends React.Component {
 	
 	constructor(props){
@@ -10,7 +12,9 @@ class TodoList extends React.Component {
 	render(){
 		return (
 			<ul className="todo-list">{this.props.list.map((task, index) => {
-				return (<li key={index}>{task}</li>);
+				return (
+					<Task key={index} id={index} value={task} handleDelete={this.props.handleDelete}/>
+				);
 			})}</ul>
 		);
 	}
