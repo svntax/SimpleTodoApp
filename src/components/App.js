@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 
+import TodoForm from "./TodoForm";
+
 class App extends React.Component {
 	
 	constructor(props){
@@ -11,6 +13,7 @@ class App extends React.Component {
 		return (
 			<div className="app">
 				<div className="main-header">Simple To-Do App</div>
+				<TodoForm />
 			</div>
 		);
 	}

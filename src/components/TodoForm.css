@@ -1,0 +1,18 @@
+.todo-form {
+	background-color: white;
+	border-top: 5px solid #7fb2f0;
+	width: 600px;
+	text-align: center;
+	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.todo-input-text {
+	margin: 15px;
+	padding: 5px;
+	width: 560px;
+	font-size: 24px;
+}
+
+.todo-input-text::placeholder {
+	color: gray;
+}

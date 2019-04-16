@@ -1,0 +1,14 @@
+.todo-list {
+	list-style-type: none;
+	text-align: left;
+	color: #16193B;
+	margin: 0;
+	padding: 0;
+	font-size: 24px;
+	word-wrap: break-word;
+}
+
+.todo-list > li {
+	padding: 10px 5px 10px 5px;
+	border-top: 2px dashed gray;
+}
