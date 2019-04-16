@@ -13,7 +13,11 @@ class TodoList extends React.Component {
 		return (
 			<ul className="todo-list">{this.props.list.map((task, index) => {
 				return (
-					<Task key={index} id={index} value={task} handleDelete={this.props.handleDelete}/>
+					<Task key={index} id={index} value={task}
+					handleDelete={this.props.handleDelete}
+					handleClick={this.props.handleClick}
+					stopEditing={this.props.stopEditing}
+					/>
 				);
 			})}</ul>
 		);
