@@ -4,12 +4,12 @@ class Task extends React.Component {
 	
 	constructor(props){
 		super(props);
-		//TODO taskComplete isn't being tracked properly when tasks are deleted (related to issue from using index as key)
-		this.state = {taskComplete: "none", color: "#16193B", editedValue: "", value: "", isBeingEdited: false};
+
+		this.state = {editedValue: "", isBeingEdited: false};
 	}
 	
 	taskCheckboxChanged = (event) => {
-		this.setState({taskComplete: event.target.checked ? "line-through" : "none", color: event.target.checked ? "gray" : "#16193B"});
+		this.props.updateStrikethrough(this.props.id, event.target.checked);
 	}
 	
 	handleDelete = () => {
@@ -17,7 +17,9 @@ class Task extends React.Component {
 	}
 	
 	handleClick = () => {
-		this.setState({isBeingEdited: true, editedValue: this.props.value});
+		if(!this.props.strikethrough){
+			this.setState({isBeingEdited: true, editedValue: this.props.value});
+		}
 	}
 	
 	handleChange = (event) => {
@@ -26,7 +28,7 @@ class Task extends React.Component {
 	
 	handleKeyPress = (event) => {
 		if(event.keyCode == 13){
-			this.stopEditing()
+			this.stopEditing();
 		}
 	}
 	
@@ -45,8 +47,11 @@ class Task extends React.Component {
 				onKeyDown={this.handleKeyPress}
 				>
 				</input>
-				<input className="task-checkbox" type="checkbox" onChange={this.taskCheckboxChanged} style={{display: this.state.isBeingEdited ? "none" : "inline"}}></input>
-				<span style={{textDecoration: this.state.taskComplete, color: this.state.color, display: this.state.isBeingEdited ? "none" : "inline"}}
+				<input className="task-checkbox" type="checkbox" onChange={this.taskCheckboxChanged} checked={this.props.strikethrough} style={{display: this.state.isBeingEdited ? "none" : "inline"}}></input>
+				<span style={{
+						textDecoration: this.props.strikethrough ? "line-through" : "none",
+						color: this.props.strikethrough ? "gray" : "#16193B", display: this.state.isBeingEdited ? "none" : "inline"}
+					}
 				onDoubleClick={this.handleClick}>{this.props.value}</span>
 				<div className="delete-button" onClick={this.handleDelete} style={{display: this.state.isBeingEdited ? "none" : "inline"}}><span>x</span></div>
 			</li>

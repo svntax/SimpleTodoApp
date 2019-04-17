@@ -10,8 +10,7 @@ class TodoForm extends React.Component {
 		
 		this.state = {
 			tasks: [],
-			currentValue: "",
-			editing: -1
+			currentValue: ""
 		};
 	}
 	
@@ -30,34 +29,36 @@ class TodoForm extends React.Component {
 		this.setState({currentValue: event.target.value});
 	}
 	
-	/*handleSubmit = (event) => {
-		if(this.state.currentValue.trim()){
-			this.addTask(this.state.currentValue.trim());
-			this.setState({currentValue: ""});
-		}
-		
-		event.preventDefault();
-	}*/
-	
 	addTask = (value) => {
-		this.state.tasks.push(value.trim());
+		this.state.tasks.push({value: value.trim(), strikethrough: false});
 		this.setState({tasks: this.state.tasks});
 	}
 	
 	removeTask = (id) => {
 		const filteredList = this.state.tasks.filter((task, index) => {
-			return id !== index;
+			return id !== (index + task.value);
 		});
 		this.setState({tasks: filteredList});
 	}
 	
 	updateTask = (id, value) => {
-		console.log(id + ": " + value);
 		const newTasks = this.state.tasks.slice();
+		const taskID = newTasks.findIndex((task, index) => {
+			return (index + task.value) === id;
+		});
 		if(value.trim()){
-			newTasks[id] = value.trim();
+			newTasks[taskID].value = value.trim();
 		}
-		this.setState({editing: -1, tasks: newTasks});
+		this.setState({tasks: newTasks});
+	}
+	
+	updateStrikethrough = (id, flag) => {
+		const newTasks = this.state.tasks.slice();
+		const taskID = newTasks.findIndex((task, index) => {
+			return (index + task.value) === id;
+		});
+		newTasks[taskID].strikethrough = flag;
+		this.setState({tasks: newTasks});
 	}
 	
 	render(){
@@ -65,7 +66,11 @@ class TodoForm extends React.Component {
 			<div className="todo-form">
 				<input className="todo-input-text" type="text" placeholder="New task..." value={this.state.currentValue}
 				onChange={this.handleChange} onKeyDown={this.handleKeyPress}></input>
-				<TodoList list={this.state.tasks} handleDelete={this.removeTask} stopEditing={this.updateTask} />
+				<TodoList list={this.state.tasks}
+				handleDelete={this.removeTask}
+				stopEditing={this.updateTask} 
+				updateStrikethrough={this.updateStrikethrough}
+				/>
 			</div>
 		);
 	}
