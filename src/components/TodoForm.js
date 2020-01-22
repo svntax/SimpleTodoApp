@@ -3,6 +3,8 @@ import "./TodoForm.css";
 
 import TodoList from "./TodoList";
 
+const TASKS_KEY = "storedTasks";
+
 class TodoForm extends React.Component {
 	
 	constructor(props){
@@ -12,6 +14,14 @@ class TodoForm extends React.Component {
 			tasks: [],
 			currentValue: ""
 		};
+	}
+
+	componentDidMount(){
+		const storedTasksJsonString = localStorage.getItem(TASKS_KEY);
+		if(storedTasksJsonString){
+			const storedTasks = JSON.parse(storedTasksJsonString);
+			this.setState({tasks: storedTasks});
+		}
 	}
 	
 	handleKeyPress = (event) => {
@@ -32,6 +42,7 @@ class TodoForm extends React.Component {
 	addTask = (value) => {
 		this.state.tasks.push({value: value.trim(), strikethrough: false});
 		this.setState({tasks: this.state.tasks});
+		localStorage.setItem(TASKS_KEY, JSON.stringify(this.state.tasks));
 	}
 	
 	removeTask = (id) => {
@@ -39,6 +50,7 @@ class TodoForm extends React.Component {
 			return id !== (index + task.value);
 		});
 		this.setState({tasks: filteredList});
+		localStorage.setItem(TASKS_KEY, JSON.stringify(filteredList));
 	}
 	
 	updateTask = (id, value) => {
@@ -50,6 +62,7 @@ class TodoForm extends React.Component {
 			newTasks[taskID].value = value.trim();
 		}
 		this.setState({tasks: newTasks});
+		localStorage.setItem(TASKS_KEY, JSON.stringify(newTasks));
 	}
 	
 	updateStrikethrough = (id, flag) => {
@@ -59,6 +72,7 @@ class TodoForm extends React.Component {
 		});
 		newTasks[taskID].strikethrough = flag;
 		this.setState({tasks: newTasks});
+		localStorage.setItem(TASKS_KEY, JSON.stringify(newTasks));
 	}
 	
 	render(){
